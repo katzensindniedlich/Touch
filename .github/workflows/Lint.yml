@@ -1,0 +1,28 @@
+name: Lint
+
+on:
+  push:
+    paths-ignore: .github/**
+  pull_request:
+    paths-ignore: .github/**
+
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            scripts
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install
+        run: bun install
+
+      - name: Lint
+        run: bun run lint

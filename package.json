@@ -1,0 +1,29 @@
+{
+    "name": "Touch",
+    "type": "module",
+    "private": true,
+    "version": "0.0.0",
+    "description": "Open private channels with Ctrl+O",
+    "author": "Ems",
+    "scripts": {
+        "lint": "eslint --cache --cache-strategy content .",
+        "build": "rollup --config rollup.config.ts --configPlugin typescript",
+        "inject": "node scripts/inject.js",
+        "load": "npm run build && npm run inject"
+    },
+    "devDependencies": {
+        "rollup": "^4.9.6",
+        "tslib": "^2.6.2",
+        "typescript": "^5.3.3",
+        "eslint": "^8.56.0",
+        "sanitize-filename": "^1.6.3",
+        "@rollup/plugin-terser": "^0.4.4",
+        "@rollup/plugin-typescript": "^11.1.6",
+        "@types/node": "^20.11.7",
+        "@types/react": "^18.2.48",
+        "@types/react-dom": "^18.2.18",
+        "@types/react-reconciler": "^0.28.8",
+        "@typescript-eslint/eslint-plugin": "^6.20.0",
+        "@typescript-eslint/parser": "^6.20.0"
+    }
+}
