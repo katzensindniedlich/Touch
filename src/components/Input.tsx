@@ -12,10 +12,12 @@ const style: CSSProperties = {
     margin: 'auto',
     marginTop: '15px',
 
-    width: '96.5%',
+    width: '100%',
     overflow: 'hidden',
-    fontSize: '16px',
-    lineHeight: '32px',
+    boxSizing: 'border-box',
+    fontSize: '1rem',
+    lineHeight: 2,
+    letterSpacing: '.04rem',
 
     border: 'none',
     borderRadius: 'var(--radius-xs)',
