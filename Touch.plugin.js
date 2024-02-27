@@ -130,7 +130,7 @@ class Touch extends Plugin {
         } else if (!input.checkValidity()) {
             showError("Invalid ID format");
         } else {
-            channelActions.openPrivateChannel(input.value).then((userID => this.onSuccess(userID)), (error => this.onError(error)));
+            channelActions?.openPrivateChannel(input.value).then((userID => this.onSuccess(userID)), (error => this.onError(error)));
         }
     }
     start() {
@@ -143,7 +143,7 @@ class Touch extends Plugin {
 
 class Dummy extends Plugin {
     start() {
-        showError("Channel actions not found ─ try to reload");
+        showError(`${this.meta.name} ─ Channel actions not found`);
         this.disable();
     }
     stop() {}
