@@ -141,7 +141,7 @@ class Touch extends Plugin {
  */
 class Dummy extends Plugin {
     start() {
-        showError('Channel actions not found ─ try to reload')
+        showError(`${this.meta.name} ─ Channel actions not found`)
         this.disable()
     }
 
