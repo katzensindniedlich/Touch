@@ -116,7 +116,7 @@ class Touch extends Plugin {
             showError('Invalid ID format')
         }
         else {
-            (channelActions as ChannelActions).openPrivateChannel(input.value)
+            channelActions?.openPrivateChannel(input.value)
             .then(
                 userID => this.onSuccess(userID),
                 (error: ErrorResponse) => this.onError(error)
