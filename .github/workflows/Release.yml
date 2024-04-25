@@ -1,0 +1,57 @@
+name: Release
+concurrency: Releases
+
+on: workflow_dispatch
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install
+        run: bun install --production
+
+      - name: Build
+        run: bun run build
+
+      - name: Get Version
+        id: version
+        run: echo "VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_OUTPUT
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: ${{ steps.version.outputs.VERSION }}
+          tag_name: v${{ steps.version.outputs.VERSION }}
+          prerelease: ${{ contains(steps.version.outputs.VERSION, '-') }}
+          files: dist/*
+          generate_release_notes: true
+
+      - name: Ensure Branch
+        id: branch
+        uses: peterjgrainger/action-create-branch@v2.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: submit
+
+      - name: Submit
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          FOLDER: dist
+          BRANCH: submit
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SQUASH_HISTORY: ${{ steps.branch.outputs.created }}
+          SKIP_EMPTY_COMMITS: true
+          MESSAGE: "{sha} ➜ Submit commits to BetterDiscord"
