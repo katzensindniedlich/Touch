@@ -24,7 +24,7 @@ jobs:
 
       - name: Get Version
         id: version
-        run: echo "VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_OUTPUT
+        run: echo "VERSION=$(jq -r '.version // "0.0.0"' package.json)" >> $GITHUB_OUTPUT
 
       - name: Release
         uses: softprops/action-gh-release@v1

@@ -20,28 +20,28 @@ abstract class Plugin implements PluginInterface {
     }
 
     /**
-     * Enables this plugin, also calls `this.start()` on BetterDiscords site.
+     * Enables this plugin, also calls this.start() on BetterDiscords side.
      */
     enable() {
         Plugins.enable(this.meta.id)
     }
 
     /**
-     * Disables this plugin, also calls `this.stop()` on BetterDiscords site.
+     * Disables this plugin, also calls this.stop() on BetterDiscords side.
      */
     disable() {
         Plugins.disable(this.meta.id)
     }
 
     /**
-     * Disables this plugin when its enabled and vice versa.
+     * Disables this plugin when it is enabled and vice versa.
      */
     toggle() {
         Plugins.toggle(this.meta.id)
     }
 
     /**
-     * Reloades this plugin when its enabled, and enables it again.
+     * Reloads this plugin when it is enabled, and enables it again.
      */
     reload() {
         Plugins.reload(this.meta.id)
