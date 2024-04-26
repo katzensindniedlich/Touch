@@ -16,7 +16,7 @@ interface Target {
 
 /**
  * Implements a keybinding.
- * Calls the given callback when a specific key got pressed.
+ * Calls the given callback when specific keys got pressed.
  */
 export default class Keybind {
     /**
@@ -26,7 +26,7 @@ export default class Keybind {
     check: Check
 
     /**
-     * The callback to call when our key got pressed.
+     * The callback to call when the keys got pressed.
      * Takes the KeyboardEvent and the Keybind instance as parameters.
      */
     callback: Callback
@@ -35,7 +35,7 @@ export default class Keybind {
      * The target element, where the Keyboard-Events should occur.
      * @readonly
      */
-    readonly target: Target
+    readonly target
 
     /**
      * Creates a new Keybind!
