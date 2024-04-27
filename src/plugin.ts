@@ -16,8 +16,9 @@ const { UI } = BdApi
 interface ChannelActions {
     /**
      * Discords internal method to open private channels.
+     *
      * @param userId - The id of the user to open the private channel to.
-     * @returns A Promise resolving to the id of the user whose channel was opened.
+     * @returns A Promise resolving to the id of the opened channel.
      */
     openPrivateChannel(userId: string): Promise<string>
 }
@@ -95,7 +96,7 @@ class Touch extends Plugin {
     /**
      * Called whenever the private channel could be opened successfully.
      */
-    onSuccess = (userId: string) => {
+    onSuccess = (channelId: string) => {
         showSuccess('Successfully created channel')
     }
 
