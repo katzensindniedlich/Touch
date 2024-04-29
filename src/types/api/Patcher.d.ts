@@ -1,4 +1,5 @@
-type Func  = (...args: any[]) => any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Func = (...args: any[]) => unknown
 
 
 /**
@@ -37,7 +38,7 @@ export type insteadCallback<Original extends Func = Func> =  (
     originalThis: ThisParameterType<Original>,
     orginalArguments: Parameters<Original>,
     original: Original
-) => any
+) => unknown
 
 /**
  * Callbacktype for patch callbacks called after.  
@@ -52,7 +53,7 @@ export type afterCallback<Original extends Func = Func> = (
     originalThis: ThisParameterType<Original>,
     orginalArguments: Parameters<Original>,
     originalReturn: ReturnType<Original>
-) => any
+) => unknown
 
 
 type DefineChildPatches<
@@ -117,7 +118,7 @@ export interface PseudoModule {
     /**
      * All other module properties, including the function to patch.
      */
-    [other: string]: any
+    [other: string]: unknown
 }
 
 /**
@@ -145,7 +146,7 @@ export interface PatcherAPI {
     /**
      * This method patches onto another function, allowing your code to run beforehand.  
      * Using this, you are also able to modify the incoming arguments before the original method is run.
-     * 
+     *
      * @param caller - Costom name of the caller of the patch function. (for grouping)
      * @param moduleToPatch - Object with the function to be patched or the name / an array of props to search for it.
      * @param functionName - Name of the function to be patched.
@@ -162,7 +163,7 @@ export interface PatcherAPI {
     /**
      * This method patches onto another function, allowing your code to run instead.  
      * Using this, you are also able to modify the return value, using the return of your code instead.
-     * 
+     *
      * @param caller - Costom name of the caller of the patch function. (for grouping)
      * @param moduleToPatch - Object with the function to be patched or the name / an array of props to search for it.
      * @param functionName - Name of the function to be patched.
@@ -179,7 +180,7 @@ export interface PatcherAPI {
     /**
      * This method patches onto another function, allowing your code to run instead.  
      * Using this, you are also able to modify the return value, using the return of your code instead.
-     * 
+     *
      * @param caller - Costom name of the caller of the patch function. (for grouping)
      * @param moduleToPatch - Object with the function to be patched or the name / an array of props to search for it.
      * @param functionName - Name of the function to be patched.

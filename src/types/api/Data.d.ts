@@ -10,7 +10,7 @@ import type { JsonValue, JsonAble } from '../Json'
 export interface DataAPI {
 	/**
 	 * Deletes a piece of stored data,  
-	 * this is different than saving as `null` or `undefined`.
+	 * this is different than saving as null or undefined.
 	 *
 	 * @param pluginName - Name of the plugin deleting data.
 	 * @param key - Which piece of data to delete.

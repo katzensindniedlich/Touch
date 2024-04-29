@@ -13,13 +13,14 @@ import type { RollupOptions } from 'rollup'
  * generated out of the sanitized fileStem or name propety of package.json.
  */
 const stem = (() => {
+    let content
     const { name, fileStem=name } = Package as JsonObject
 
     if (typeof fileStem === 'string') {
-        return sanitize(fileStem) || 'Plugin'
+        content = sanitize(fileStem)
     }
 
-    return 'Plugin'
+    return content || 'Plugin'
 })()
 
 
@@ -30,17 +31,25 @@ const metaTags = [
 
 
 /**
- * BetterDiscords addon metadata comment,
+ * The metadata comment of the addon,
  * generated out of package.json properties.
- * 
+ *
  * @see https://docs.betterdiscord.app/developers/addons#meta
  */
 const banner = (() => {
     let body = '/**'
-    const meta: JsonObject = { name: 'Plugin', ...Package as JsonObject }
+    const meta = Package as JsonObject
+
+    if (typeof meta.name !== 'string' || !meta.name.length) {
+        meta.name = stem
+    }
 
     for (const [key, value] of Object.entries(meta)) {
-        if (metaTags.includes(key)) {
+        if (
+            metaTags.includes(key)
+            && typeof value === 'string'
+            && value.length
+        ) {
             body += `\n * @${key} ${value}`
         }
     }

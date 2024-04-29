@@ -128,7 +128,7 @@ export interface BdApi {
     readonly Webpack: WebpackAPI
 
     /**
-     * A reference string for BD's version.
+     * A reference string for BetterDiscords version.
      * @readonly
      */
     readonly version: string

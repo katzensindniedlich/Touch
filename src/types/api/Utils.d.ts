@@ -50,7 +50,7 @@ export interface UtilsAPI {
      * @param delay - The time in ms since the last call of the return function until the executer is called.
      * @returns The function, that need to be called to refresh the timeout.
      */
-    debounce<Args extends any[]>(
+    debounce<Args extends unknown[]>(
         executor: (...args: Args) => void,
         delay: number
     ): (...args: Args) => void
@@ -92,10 +92,10 @@ export interface UtilsAPI {
      */
     findInTree(
         tree: object,
-        searchFilter: string | ((item: any) => boolean),
+        searchFilter: string | ((item: unknown) => boolean),
         options?: {
             walkable?: string[] | null
             ignore?: string[]
         }
-    ): any
+    ): unknown
 }

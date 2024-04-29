@@ -18,7 +18,7 @@ export interface DOMAPI {
     get screenWidth(): number
 
     /**
-     * Adds a `<style>` to the document with the given ID.  
+     * Adds a `<style>` element to the document with the given ID.  
      * Or overwrites it when already given.
      *
      * @param id - ID to use for style element.
@@ -27,7 +27,7 @@ export interface DOMAPI {
     addStyle(id: string, css: string): void
 
     /**
-     * Removes a `<style>` from the document corresponding to the given ID.
+     * Removes the `<style>` element from the document that has the specified ID.
      *
      * @param id - ID used for the style element.
      */

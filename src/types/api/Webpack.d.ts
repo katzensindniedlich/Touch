@@ -8,7 +8,7 @@ export interface Module {
     /**
      * The exports object (Module) or the direct exported thing.
      */
-    exports: any
+    exports: unknown
 }
 
 
@@ -16,13 +16,13 @@ export interface Module {
  * A function to filter for a module.  
  * The `exports` is sometimes the module object or the default exported object.
  */
-export type ModuleFilter = (exports: any, module: Module, id: string) => boolean
+export type ModuleFilter = (exports: unknown, module: Module, id: string) => boolean
 
 /**
  * Only uses the module exports as argument to filter modules.   
  * The `exports` is sometimes the module object or the default exported object.
  */
-export type ModuleExportFilter = (exports: any) => boolean
+export type ModuleExportFilter = (exports: unknown) => boolean
 
 
 /**
@@ -102,7 +102,7 @@ interface ModuleQuery<First extends boolean = boolean> {
 
 type BulkResult<Queries extends ModuleQuery[]> = {
     [Query in keyof Queries]: (
-		Queries[Query]['first'] extends false ? any[] : any
+		Queries[Query]['first'] extends false ? unknown[] : unknown
 	)
 }
 
@@ -119,7 +119,7 @@ export interface WebpackAPI {
      * A Proxy that returns the module source by ID.
      * @readonly
      */
-    readonly modules: Record<Module['id'], (...args: any[]) => any>
+    readonly modules: Record<Module['id'], (...args: unknown[]) => unknown>
 
     /**
      * Series of {@link Filters} to be used for finding webpack modules.
@@ -158,7 +158,7 @@ export interface WebpackAPI {
             defaultExport?: boolean
             searchExports?: boolean
         }
-    ): (First extends true ? any : any[]) | undefined
+    ): (First extends true ? unknown : unknown[]) | undefined
 
     /**
      * Attempts to find a lazy loaded module,
@@ -178,7 +178,7 @@ export interface WebpackAPI {
             defaultExport?: boolean
             searchExports?: boolean
         }
-    ): Promise<any>
+    ): Promise<unknown>
 
     /**
      * Searches for a module by value, returns module & matched key.  
@@ -196,11 +196,11 @@ export interface WebpackAPI {
     getWithKey(
         filter: ModuleExportFilter,
         options?: {
-            target?: any
+            target?: unknown
             defaultExport?: boolean
             searchExports?: boolean
         }
-    ): [any, string | undefined]
+    ): [unknown, string | undefined]
 
     /**
      * Finds all modules matching a filter function.
@@ -217,7 +217,7 @@ export interface WebpackAPI {
             defaultExport?: boolean
             searchExports?: boolean
         }
-    ): any[] | undefined
+    ): unknown[] | undefined
 
     /**
      * Finds a module using its code.
@@ -236,7 +236,7 @@ export interface WebpackAPI {
             defaultExport?: boolean
             searchExports?: boolean
         }
-    ): any
+    ): unknown
 
     /**
      * Finds all modules using its code.
@@ -254,7 +254,7 @@ export interface WebpackAPI {
             defaultExport?: boolean
             searchExports?: boolean
         }
-    ): any
+    ): unknown
 
     /**
      * Finds a single module using properties on its prototype.  
@@ -263,7 +263,7 @@ export interface WebpackAPI {
      * @param prototypes - Property names to use to filter modules.
      * @return The default export of the module found else undefined.
      */
-    getByPrototypeKeys(...prototypes: string[]): any
+    getByPrototypeKeys(...prototypes: string[]): unknown
 
     /**
      * Finds all modules with a set of properties of its prototype.  
@@ -272,7 +272,7 @@ export interface WebpackAPI {
      * @param prototypes - Property names to use to filter modules.
      * @return The default export of the module found else undefined.
      */
-    getAllByPrototypeKeys(...prototypes: string[]): any[] | undefined
+    getAllByPrototypeKeys(...prototypes: string[]): unknown[] | undefined
 
     /**
      * Finds a single module using its own properties.  
@@ -281,7 +281,7 @@ export interface WebpackAPI {
      * @param props - Property names to use to filter modules.
      * @return The default export of the module found else undefined.
      */
-    getByKeys(...props: string[]): any
+    getByKeys(...props: string[]): unknown
 
     /**
      * Finds all modules with a set of properties.  
@@ -290,7 +290,7 @@ export interface WebpackAPI {
      * @param keys - Property names to use to filter modules.
      * @return The default export of the module found else undefined.
      */
-    getAllByKeys(...keys: string[]): any[] | undefined
+    getAllByKeys(...keys: string[]): unknown[] | undefined
 
     /**
      * Finds a single module using a set of strings.  
@@ -299,7 +299,7 @@ export interface WebpackAPI {
      * @param strings - Strings to use to filter modules. (the modules toString string should contain one of these).
      * @return The default export of the module found else undefined.
      */
-    getByStrings(...strings: string[]): any
+    getByStrings(...strings: string[]): unknown
 
     /**
      * Finds all modules with a set of (sub) strings.  
@@ -308,7 +308,7 @@ export interface WebpackAPI {
      * @param strings - Strings to use to filter modules (the modules toString string should contain one of these).
      * @return The default exports of the modules found else undefined.
      */
-    getAllByStrings(...strings: string[]): any[] | undefined
+    getAllByStrings(...strings: string[]): unknown[] | undefined
 
     /**
      * Finds an internal Store module using the name.
@@ -316,5 +316,5 @@ export interface WebpackAPI {
      * @param name - Name of the store to find (usually includes 'Store').
      * @return The default export of the module found else undefined.
      */
-    getStore(name: string): any
+    getStore(name: string): unknown
 }

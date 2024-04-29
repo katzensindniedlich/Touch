@@ -142,7 +142,7 @@ export interface Tooltip {
 
 /**
  * Filters to show as options in {@link UIAPI.openDialog}.
- * 
+ *
  * @see https://www.electronjs.org/docs/latest/api/structures/file-filter
  */
 export interface FileFilter {

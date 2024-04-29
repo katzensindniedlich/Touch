@@ -32,7 +32,7 @@ export interface ReactUtilsAPI {
      * Returns the internal root object added by react on #app-mount.
      * @readonly
      */
-    get rootInstance(): FiberRoot | undefined
+    get rootInstance(): FiberRoot
 
     /**
      * Gets the internal react data of a specified node
@@ -43,7 +43,7 @@ export interface ReactUtilsAPI {
     getInternalInstance(node: HTMLElement): Fiber | undefined
 
     /**
-     * Attempts to find the 'owner' node to the current node.
+     * Attempts to find the owner node to the current node.
      * This is generally a node with a stateNode--a class component.
      *
      * @param node - Node to obtain React instance of.

@@ -78,7 +78,7 @@ export interface AddonBaseData {
      * Old metadata with format `json` is loaded with `JSON.parse`.  
      * New `jsdoc` metadata are only readed and not interpreted.
      */
-    [key: string]: any
+    [key: string]: unknown
 }
 
 
@@ -192,7 +192,7 @@ export interface PluginInterface {
     /**
      * Userdefined plugin properties, may be undefined.
      */
-    [key: string]: any
+    [key: string]: unknown
 }
 
 
@@ -207,7 +207,7 @@ export interface PluginClass {
      /**
      * Userdefined plugin class properties, may be undefined.
      */
-    [key: string]: any
+    [key: string]: unknown
 }
 
 

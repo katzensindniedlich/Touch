@@ -13,8 +13,8 @@ export type ChildItemType = (
 
 
 interface BaseProps {
-    items?: any
-    color?: any
+    items?: unknown
+    color?: unknown
 
     /**
      * Type of the item,
@@ -170,7 +170,7 @@ export interface ContextMenuAPI extends MenuComponents {
     buildItem(props: ItemProps): ReactElement
 
     /**
-     * Creates the menu *component* including the wrapping `ContextMenu`.  
+     * Creates the menu *component* including the wrapping ContextMenu.  
      * Calls {@link ContextMenuAPI.buildMenuChildren} under the covers.  
      * Used to call in combination with {@link ContextMenuAPI.open}.
      *
@@ -221,25 +221,25 @@ export interface ContextMenuAPI extends MenuComponents {
 
     /**
      * Allows you to patch a given context menu.  
-     * Acts as a wrapper around the `Patcher`.
+     * Acts as a wrapper around the Patcher.
      *
-     * @param navId - Discord's internal `navId` used to identify context menus.
+     * @param navId - Discord's internal navId used to identify context menus.
      * @param callback - Callback function that accepts the React render tree.
      * @returns A function that automatically unpatches.
      */
     patch(
         navId: string,
-        callback: (tree: ReactElement, props: any) => void
+        callback: (tree: ReactElement, props: unknown) => void
     ): () => void
 
     /**
      * Allows you to remove the patch added to a given context menu.
      *
-     * @param navId - The original `navId` from patching.
+     * @param navId - The original navId from patching.
      * @param callback - The original callback from patching.
      */
     unpatch(
         navId: string,
-        callback: (tree: ReactElement, props: any) => void
+        callback: (tree: ReactElement, props: unknown) => void
     ): void
 }

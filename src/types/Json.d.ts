@@ -19,7 +19,7 @@ export type JsonValue = JsonObject | JsonPrimitive | JsonValue[]
 
 
 /**
- * Everything that can be trabnsformed into json,
+ * Everything that can be trabnsformed into json
  * using `JSON.stringify`.
  */
 export type JsonAble = (

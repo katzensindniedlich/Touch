@@ -96,7 +96,7 @@ class Touch extends Plugin {
     /**
      * Called whenever the private channel could be opened successfully.
      */
-    onSuccess = (channelId: string) => {
+    onSuccess = () => {
         showSuccess('Successfully created channel')
     }
 
