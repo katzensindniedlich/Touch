@@ -4,14 +4,16 @@ concurrency: Releases
 on: workflow_dispatch
 
 jobs:
-  Release:
+  Build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    outputs:
+      version: ${{ steps.version.outputs.VERSION }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: src
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
@@ -24,22 +26,57 @@ jobs:
 
       - name: Get Version
         id: version
-        run: echo "VERSION=$(jq -r '.version // "0.0.0"' package.json)" >> $GITHUB_OUTPUT
+        run: |
+          version=$(jq --raw-output '.version // "0.0.0"' package.json)
+          echo "VERSION=$version" >> $GITHUB_OUTPUT
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          path: dist
+          name: Build
+          if-no-files-found: error
+
+  Release:
+    needs: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          name: Build
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.version.outputs.VERSION }}
-          tag_name: v${{ steps.version.outputs.VERSION }}
-          prerelease: ${{ contains(steps.version.outputs.VERSION, '-') }}
+          name: ${{ needs.Build.outputs.version }}
+          tag_name: v${{ needs.Build.outputs.version }}
+          prerelease: ${{ contains(needs.Build.outputs.version, '-') }}
           files: dist/*
           generate_release_notes: true
 
+  Submit:
+    needs: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          name: Build
+
       - name: Ensure Branch
         id: branch
-        uses: peterjgrainger/action-create-branch@v2.3.0
+        uses: peterjgrainger/action-create-branch@v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -54,4 +91,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SQUASH_HISTORY: ${{ steps.branch.outputs.created }}
           SKIP_EMPTY_COMMITS: true
-          MESSAGE: "{sha} ➜ Submit commits to BetterDiscord"
+          MESSAGE: ${{ github.sha }} ➜ Submit commits to BetterDiscord
