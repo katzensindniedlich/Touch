@@ -1,11 +1,15 @@
 import { resolve, join } from 'node:path'
-import { existsSync, readdirSync, copyFile, constants } from 'node:fs'
+import { copyFile } from 'node:fs/promises'
+import { existsSync, readdirSync } from 'node:fs'
 
 
-const { platform, env } = process
+const inRed = '\x1b[31m%s\x1b[0m'
+const inGreen = '\x1b[32m%s\x1b[0m'
 
 
-const dest = (() => {
+const plugins = (() => {
+    const { platform, env } = process
+    
     switch (platform) {
         case 'win32':
             return resolve(env.APPDATA, 'BetterDiscord', 'plugins')
@@ -17,7 +21,7 @@ const dest = (() => {
 })()
 
 
-if (existsSync(dest)) {
+if (existsSync(plugins)) {
     let name
     const dist = resolve('.', 'dist')
 
@@ -26,24 +30,19 @@ if (existsSync(dest)) {
     }
 
     if (name) {
-        const finalize = error => {
-            if (error) {
-                console.error('\x1b[31mAn Error occurred during injection:\x1b[0m\n\n', error)
-                process.exitCode = 1
-            }
-            else {
-                console.log('\x1b[32mSuccessfully injected', name, 'into BetterDiscord!\x1b[0m')
-            }
-        }
+        const plugin = join(dist, name)
+        const dest = join(plugins, name)
+        
+        await copyFile(plugin, dest)
 
-        copyFile(join(dist, name), join(dest, name), constants.COPYFILE_FICLONE, finalize)
+        console.log(inGreen, `Successfully injected ${name} into Betterdiscord!`)
     }
     else {
-        console.error('\x1b[31mPlugin file not found\x1b[0m')
+        console.error(inRed, 'Plugin file not found')
         process.exitCode = 1
     }
 }
 else {
-    console.error('\x1b[31mBetterDiscords plugins folder not found\x1b[0m')
+    console.error(inRed, 'Betterdiscords plugin folder not found')
     process.exitCode = 1
 }
