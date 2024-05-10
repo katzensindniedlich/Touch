@@ -1,7 +1,7 @@
 import builtins from 'globals'
 
 import eslint from '@eslint/js'
-import { config, configs as tsconfigs } from 'typescript-eslint'
+import tseslint from 'typescript-eslint'
 
 
 const BdApi = 'readonly'
@@ -20,13 +20,13 @@ const js = [
 ]
 
 
-export default config(
+export default tseslint.config(
     eslint.configs.recommended,
-    ...tsconfigs.strictTypeChecked,
+    ...tseslint.configs .strictTypeChecked,
     
     {
         files: js,
-        ...tsconfigs.disableTypeChecked
+        ...tseslint.configs .disableTypeChecked
     },
     {
         languageOptions: {
