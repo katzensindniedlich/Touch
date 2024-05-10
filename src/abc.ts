@@ -5,12 +5,13 @@ const { Plugins } = BdApi
 
 
 /**
- * The plugin base class, with useful features.
+ * The base class for plugin implementations
+ * with useful features.
  */
 abstract class Plugin implements PluginInterface {
     /**
-     * Plugin metadata,
-     * passed to the constructor from BetterDiscord on plugin load.
+     * Plugin metadata
+     * passed to the constructor from Betterdiscord on plugin load.
      * @readonly
      */
     readonly meta
@@ -20,40 +21,41 @@ abstract class Plugin implements PluginInterface {
     }
 
     /**
-     * Enables this plugin, also calls this.start() on BetterDiscords side.
+     * Enables this plugin.
      */
     enable() {
         Plugins.enable(this.meta.id)
     }
 
     /**
-     * Disables this plugin, also calls this.stop() on BetterDiscords side.
+     * Disables this plugin.
      */
     disable() {
         Plugins.disable(this.meta.id)
     }
 
     /**
-     * Disables this plugin when it is enabled and vice versa.
+     * Disables this plugin when it is enabled
+     * and vice versa.
      */
     toggle() {
         Plugins.toggle(this.meta.id)
     }
 
     /**
-     * Reloads this plugin when it is enabled, and enables it again.
+     * Reloads this plugin if it is enabled.
      */
     reload() {
         Plugins.reload(this.meta.id)
     }
 
     /**
-     * Called from BetterDiscord when the plugin is activated (including after reloads).
+     * Called when this plugin gets activated (including after reloads).
      */
     abstract start(): void
 
     /**
-     * Called from BetterDiscord when the plugin is deactivated.
+     * Called when this plugin gets deactivated.
      */
     abstract stop(): void
 }

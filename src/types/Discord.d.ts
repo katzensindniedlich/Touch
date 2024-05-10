@@ -1,5 +1,5 @@
 /**
- * A json object with an discord server error code
+ * A json object with a discord server error code
  * and the corresponding error message.
  *
  * @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#json

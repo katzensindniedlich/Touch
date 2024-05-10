@@ -5,7 +5,7 @@ export type JsonPrimitive = string | number | boolean | null
 
 
 /** 
- * A json object may contain json data. 
+ * A json object, may contain json data. 
  */
 export type JsonObject = {
     [key: string]: JsonValue
@@ -13,14 +13,14 @@ export type JsonObject = {
 
 
 /**
- * Everything that can be a json.
+ * Everything that can be json.
  */
 export type JsonValue = JsonObject | JsonPrimitive | JsonValue[]
 
 
 /**
  * Everything that can be trabnsformed into json
- * using `JSON.stringify`.
+ * using JSON.stringify
  */
 export type JsonAble = (
     | JsonPrimitive
