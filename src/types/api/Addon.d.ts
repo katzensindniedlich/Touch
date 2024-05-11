@@ -190,7 +190,15 @@ export interface PluginInterface {
     onSwitch?(): void
 
     /**
-     * Userdefined plugin properties, may be undefined.
+     * Own plugin properties.
+     */
+    [key: string]: any  // eslint-disable-line @typescript-eslint/no-explicit-any
+}
+
+
+export interface ExternalPlugin extends PluginInterface {
+    /**
+     * External plugin properties, unknown.
      */
     [key: string]: unknown
 }
@@ -199,10 +207,10 @@ export interface PluginInterface {
 /**
  * A class constructing a BetterDiscord plugin.
  */
-export interface PluginClass {
+export interface PluginClass<Prototype extends PluginInterface> {
 
-    prototype: PluginInterface
-    new (meta: PluginMetadata): PluginInterface
+    prototype: Prototype
+    new (meta: PluginMetadata): Prototype
 
      /**
      * Userdefined plugin class properties, may be undefined.
@@ -220,12 +228,12 @@ export interface PluginData extends _NamedAddonBase {
     /**
      * The exports of the plugin-file.
      */
-    exports: PluginClass | ((meta: PluginMetadata) => PluginInterface)
+    exports: PluginClass<ExternalPlugin> | ((meta: PluginMetadata) => ExternalPlugin)
 
     /**
      * The created Instance of the exported plugin from {@link PluginData.exports}.
      */
-    instance: PluginInterface
+    instance: ExternalPlugin
 }
 
 
