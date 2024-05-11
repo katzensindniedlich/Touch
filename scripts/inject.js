@@ -9,7 +9,7 @@ const inGreen = '\x1b[32m%s\x1b[0m'
 
 const plugins = (() => {
     const { platform, env } = process
-    
+
     switch (platform) {
         case 'win32':
             return resolve(env.APPDATA, 'BetterDiscord', 'plugins')
@@ -32,7 +32,7 @@ if (existsSync(plugins)) {
     if (name) {
         const plugin = join(dist, name)
         const dest = join(plugins, name)
-        
+
         await copyFile(plugin, dest)
 
         console.log(inGreen, `Successfully injected ${name} into Betterdiscord!`)
