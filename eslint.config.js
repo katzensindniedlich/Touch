@@ -26,7 +26,7 @@ export default tseslint.config(
 
     {
         files: js,
-        ...tseslint.configs .disableTypeChecked
+        ...tseslint.configs.disableTypeChecked
     },
     {
         languageOptions: {
