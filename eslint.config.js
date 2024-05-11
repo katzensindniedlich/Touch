@@ -22,8 +22,8 @@ const js = [
 
 export default tseslint.config(
     eslint.configs.recommended,
-    ...tseslint.configs .strictTypeChecked,
-    
+    ...tseslint.configs.strictTypeChecked,
+
     {
         files: js,
         ...tseslint.configs .disableTypeChecked
