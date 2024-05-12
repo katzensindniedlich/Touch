@@ -7,6 +7,7 @@
     "author": "Ems",
     "scripts": {
         "lint": "eslint .",
+        "check": "tsc --noEmit",
         "build": "rollup --config rollup.config.ts --configPlugin typescript",
         "inject": "node scripts/inject.js",
         "load": "npm run build && npm run inject"

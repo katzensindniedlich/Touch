@@ -15,7 +15,7 @@ jobs:
         with:
           sparse-checkout: src
 
-      - name: Setup Bun
+      - name: Setup
         uses: oven-sh/setup-bun@v1
 
       - name: Install
