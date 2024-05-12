@@ -3,9 +3,9 @@ run-name: ${{ github.workflow }}
 
 on:
   push:
-    paths-ignore: .github/**
+    paths: ['**.[jt]sx?', '**.[mc][jt]s', package.json, tsconfig.json]
   pull_request:
-    paths-ignore: .github/**
+    paths: ['**.[jt]sx?', '**.[mc][jt]s', package.json, tsconfig.json]
 
 jobs:
   Lint:
@@ -14,10 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            src
-            scripts
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
