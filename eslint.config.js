@@ -16,7 +16,7 @@ const globals = {
 
 
 const js = [
-    '**/*.js', '**/*.mjs', '**/*.cjs', '**/*.jsx'
+    '**.js?(x)', '**.[mc]js'
 ]
 
 
