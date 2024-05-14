@@ -1,12 +1,9 @@
 import type { PluginMetadata, PluginInterface } from './types/api/Addon'
 
 
-const { Plugins } = BdApi
-
-
 /**
  * The base class for plugin implementations
- * with useful features.
+ * with useful features eh.
  */
 abstract class Plugin implements PluginInterface {
     /**
@@ -21,35 +18,6 @@ abstract class Plugin implements PluginInterface {
     }
 
     /**
-     * Enables this plugin.
-     */
-    enable() {
-        Plugins.enable(this.meta.id)
-    }
-
-    /**
-     * Disables this plugin.
-     */
-    disable() {
-        Plugins.disable(this.meta.id)
-    }
-
-    /**
-     * Disables this plugin when it is enabled
-     * and vice versa.
-     */
-    toggle() {
-        Plugins.toggle(this.meta.id)
-    }
-
-    /**
-     * Reloads this plugin if it is enabled.
-     */
-    reload() {
-        Plugins.reload(this.meta.id)
-    }
-
-    /**
      * Called when this plugin gets activated (including after reloads).
      */
     abstract start(): void
@@ -58,6 +26,14 @@ abstract class Plugin implements PluginInterface {
      * Called when this plugin gets deactivated.
      */
     abstract stop(): void
+
+    /**
+     * Disables this plugin.
+     * Such methods should only be used in a user-friendly way.
+     */
+    disable() {
+        BdApi.Plugins.disable(this.meta.id)
+    }
 }
 
 
