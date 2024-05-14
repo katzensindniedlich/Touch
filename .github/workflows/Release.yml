@@ -1,5 +1,8 @@
 name: Release
-concurrency: Releases
+run-name: 📦 Release
+
+concurrency:
+  group: releases
 
 on: workflow_dispatch
 
@@ -7,7 +10,7 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.version.outputs.VERSION }}
+      version: ${{ steps.version.outputs.version }}
 
     steps:
       - name: Checkout
@@ -24,11 +27,11 @@ jobs:
       - name: Build
         run: bun run build
 
-      - name: Get Version
+      - name: Parse Version
         id: version
         run: |
           version=$(jq --raw-output '.version // "0.0.0"' package.json)
-          echo "VERSION=$version" >> $GITHUB_OUTPUT
+          echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Upload
         uses: actions/upload-artifact@v4
@@ -91,4 +94,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SQUASH_HISTORY: ${{ steps.branch.outputs.created }}
           SKIP_EMPTY_COMMITS: true
-          MESSAGE: ${{ github.sha }} ➜ Submit commits to BetterDiscord
+          COMMIT_NAME: github-actions[bot]
+          COMMIT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          MESSAGE: ${{ github.sha }} ➜ Submit release to Betterdiscord

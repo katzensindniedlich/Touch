@@ -1,5 +1,5 @@
 name: Lint
-run-name: ${{ github.workflow }}
+run-name: 📝 Lint
 
 on:
   push:
