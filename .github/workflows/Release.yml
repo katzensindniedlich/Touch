@@ -10,7 +10,7 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.version.outputs.version }}
+      version: ${{ steps.version.outputs.current }}
 
     steps:
       - name: Checkout
@@ -30,8 +30,9 @@ jobs:
       - name: Parse Version
         id: version
         run: |
-          version=$(jq --raw-output '.version // "0.0.0"' package.json)
-          echo "version=$version" >> $GITHUB_OUTPUT
+          export default=$(date '+%Y.%-m.0')
+          version=$(jq --raw-output '.version // env.default' package.json)
+          echo "current=$version" >> $GITHUB_OUTPUT
 
       - name: Upload
         uses: actions/upload-artifact@v4
@@ -59,7 +60,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           name: ${{ needs.Build.outputs.version }}
-          tag_name: v${{ needs.Build.outputs.version }}
+          tag_name: ${{ needs.Build.outputs.version }}
           prerelease: ${{ contains(needs.Build.outputs.version, '-') }}
           files: dist/*
           generate_release_notes: true

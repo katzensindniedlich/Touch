@@ -1,0 +1,45 @@
+name: Bump
+run-name: 🗂️ Bump
+
+on: workflow_dispatch
+
+jobs:
+  Bump:
+    runs-on: ubuntu-latest
+    concurrency: bumps
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: package.json
+          sparse-checkout-cone-mode: false
+
+      - name: Bump
+        id: version
+        run: |
+          date=$(date '+%Y.%-m')
+          current=$(jq --raw-output .version package.json)
+
+          if [[ $current =~ $date\.([0-9]+) ]]
+          then
+            patch=$((BASH_REMATCH[1] + 1))
+          else
+            patch=0
+          fi
+          echo "next=$date.$patch" >> $GITHUB_OUTPUT
+
+      - name: Update
+        run: |
+          export version=${{ steps.version.outputs.next }} 
+          content=$(jq --indent 4 '.version = env.version' package.json)
+          echo "$content" > package.json
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          tagging_message: ${{ steps.version.outputs.next }}
+          commit_message: Bump version to ${{ steps.version.outputs.next }}
