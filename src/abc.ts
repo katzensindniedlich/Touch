@@ -1,11 +1,11 @@
-import type { PluginMetadata, PluginInterface } from './types/api/Addon'
+import type { PluginMetadata } from './types/api/Addon'
 
 
 /**
  * The base class for plugin implementations
  * with useful features eh.
  */
-abstract class Plugin implements PluginInterface {
+abstract class Plugin {
     /**
      * Plugin metadata
      * passed to the constructor from Betterdiscord on plugin load.
