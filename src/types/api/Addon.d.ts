@@ -9,76 +9,76 @@ export interface AddonBaseData {
      * The author of the addon.  
      * If not specified, *Unknown Author* will be translated appropriately and used instead.
      */
-    author: string
+    readonly author: string
 
     /**
      * The version of the addon.  
      * If not specified, *???* will be used instead.
      */
-    version: string
+    readonly version: string
 
     /**
      * The description of the addon.  
      * If not specified, *Description not provided.* will be translated appropriately and used instead.
      */
-    description: string
+    readonly description: string
 
     /**
      * The id of the addon.  
      * Equal to {@link AddonData.name} when specified, else {@link AddonData.filename}.
      */
-    id: string
+    readonly id: string
 
     /**
      * The slug of {@link AddonData.filename}.
      */
-    slug: string
+    readonly slug: string
 
      /**
       * The filename of the addon with extension.
       */
-    filename: string
+    readonly filename: string
 
     /**
      * Represents the timestamp when the addon file was created since the POSIX epoch, in milliseconds.  
      * Equal to `fs.statSync(filename).atimeMs`
      */
-    added: number
+    readonly added: number
 
     /**
      * Represents the timestamp when the addon file is modified last time since the POSIX epoch, in milliseconds.  
      * Equal to `fs.statSync(filename).mtimeMs`
      */
-    modified: number
+    readonly modified: number
 
     /**
      * The size of the addon file in bytes.  
      * Equal to `fs.statSync(filename).size`
      */
-    size: number
+    readonly size: number
 
     /**
      * Indicates that the addon could not be loaded successfully.
      */
-    partial?: true
+    readonly partial?: true
 
     /**
      * The name of the addon.  
      * Optional with format `jsdoc`.
      */
-    name?: string
+    readonly name?: string
 
     /**
      * The format of the addon metadata.
      */
-    format: 'json' | 'jsdoc'
+    readonly format: 'json' | 'jsdoc'
 
     /**
      * Additional userdefined addon metadata, could be empty.  
      * Old metadata with format `json` is loaded with `JSON.parse`.  
      * New `jsdoc` metadata are only readed and not interpreted.
      */
-    [key: string]: unknown
+    readonly [key: string]: unknown
 }
 
 
@@ -89,7 +89,7 @@ export interface AddonData extends AddonBaseData {
     /**
      * The content of the addon file, utf8 encoded.
      */
-    fileContent: string
+    readonly fileContent: string
 }
 
 
@@ -101,7 +101,7 @@ interface _NamedAddonBase extends AddonBaseData  {
     /**
      * The name of the addon.
      */
-    name: string
+    readonly name: string
 }
 
 
@@ -120,7 +120,7 @@ export interface ThemeData extends _NamedAddonBase {
      * The css content of the addon file,
      * similar to {@link AddonData.fileContent}.
      */
-    css: string
+    readonly css: string
 }
 
 
@@ -188,15 +188,10 @@ export interface PluginInterface {
      * A better way to look at this is every time the user navigates such as changing the channel or server.
      */
     onSwitch?(): void
-
-    /**
-     * Own plugin properties.
-     */
-    [key: string]: any  // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 
-export interface ExternalPlugin extends PluginInterface {
+interface ExternalPlugin extends PluginInterface {
     /**
      * External plugin properties, unknown.
      */
@@ -207,16 +202,31 @@ export interface ExternalPlugin extends PluginInterface {
 /**
  * A class constructing a BetterDiscord plugin.
  */
-export interface PluginClass<Prototype extends PluginInterface> {
-
+export interface PluginClass<
+    Prototype extends PluginInterface = PluginInterface
+> {
     prototype: Prototype
     new (meta: PluginMetadata): Prototype
+}
 
-     /**
-     * Userdefined plugin class properties, may be undefined.
-     */
+
+interface ExternalPluginClass extends PluginClass<ExternalPlugin> {
+    /**
+    * External plugin class properties, unknown.
+    */
     [key: string]: unknown
 }
+
+
+/**
+ * The expected plugin file export.
+ */
+export type PluginExport<
+    interface extends PluginInterface = PluginInterface,
+    Class extends PluginClass = PluginClass<interface>
+> = (
+    Class | ((meta: PluginMetadata) => interface)
+)
 
 
 /**
@@ -228,7 +238,7 @@ export interface PluginData extends _NamedAddonBase {
     /**
      * The exports of the plugin-file.
      */
-    exports: PluginClass<ExternalPlugin> | ((meta: PluginMetadata) => ExternalPlugin)
+    exports: PluginExport<ExternalPlugin, ExternalPluginClass>
 
     /**
      * The created Instance of the exported plugin from {@link PluginData.exports}.
