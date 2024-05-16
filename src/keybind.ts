@@ -6,7 +6,9 @@ type Callback = (
     (event: KeyboardEvent, keybind: Keybind) => void
 )
 
-type Listener = Keybind['listener']
+type Listener = (
+    (event: KeyboardEvent) => void
+)
 
 interface Target {
     addEventListener(type: string, listener: Listener): void
