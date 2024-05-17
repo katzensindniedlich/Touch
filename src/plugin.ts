@@ -3,7 +3,7 @@ import Keybind from './keybind'
 import Input, { inputRef } from './components/Input'
 
 import type { ErrorResponse } from './types/Discord'
-import type { PluginMetadata } from './types/api/Addon'
+import type { PluginMetadata, PluginExport } from './types/api/Addon'
 
 
 const { UI } = BdApi
@@ -34,7 +34,7 @@ const channelActions = (
 
 
 /**
- * Shows an success toast with the given message.
+ * Shows an success toast with the given message.  
  * Will only be shown when the BetterDiscord setting is turned on.
  */
 function showSuccess(message: string) {
@@ -46,7 +46,7 @@ function showSuccess(message: string) {
 
 
 /**
- * Shows an error toast with the given message.
+ * Shows an error toast with the given message.  
  * Will always be shown regardless of the BetterDiscord setting.
  */
 function showError(message: string) {
@@ -75,7 +75,7 @@ class Touch extends Plugin {
     }
 
     /**
-     * Shows a confirmation modal with an user id input.
+     * Shows a confirmation modal with an user id input.  
      * On confrim, request to open the private channel with that user.
      */
     showModal = () => {
@@ -156,4 +156,4 @@ class Dummy extends Plugin {
 
 export default (
     typeof channelActions === 'undefined' ? Dummy : Touch
-)
+) satisfies PluginExport
