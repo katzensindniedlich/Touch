@@ -1,4 +1,7 @@
 {
+    "include": [
+        "**/*", "**/.*", "**/.*/**/*", "**/.*/**/.*"
+    ],
     "compilerOptions": {
         "target": "esnext",
         "module": "esnext",
