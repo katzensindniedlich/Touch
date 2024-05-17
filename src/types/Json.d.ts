@@ -8,17 +8,20 @@ export type JsonPrimitive = (
     | boolean
 )
 
+
 /**
  * A json list.
  * May contain json items.
  */
 export type JsonList = JsonValue[]
 
+
 /**
  * A json object.
  * Can contain json data or is empty.
  */
 export type JsonObject = { [key: string]: JsonValue }
+
 
 /**
  * Everything that can be json.
@@ -28,6 +31,7 @@ export type JsonValue = (
     | JsonObject
     | JsonPrimitive
 )
+
 
 /**
  * Everything that can be trabnsformed into json
