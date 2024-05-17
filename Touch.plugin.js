@@ -1,27 +1,16 @@
 /**
  * @name Touch
- * @version 0.0.0
+ * @version 2024.5.0
  * @description Open private channels with Ctrl+O
  * @author Ems
  */
-const {Plugins} = BdApi;
-
 class Plugin {
     meta;
     constructor(meta) {
         this.meta = meta;
     }
-    enable() {
-        Plugins.enable(this.meta.id);
-    }
     disable() {
-        Plugins.disable(this.meta.id);
-    }
-    toggle() {
-        Plugins.toggle(this.meta.id);
-    }
-    reload() {
-        Plugins.reload(this.meta.id);
+        BdApi.Plugins.disable(this.meta.id);
     }
 }
 
@@ -112,7 +101,7 @@ class Touch extends Plugin {
             onConfirm: this.openPrivateChannel
         });
     };
-    onSuccess=userId => {
+    onSuccess=() => {
         showSuccess("Successfully created channel");
     };
     onError=error => {
