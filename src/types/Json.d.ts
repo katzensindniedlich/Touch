@@ -1,30 +1,41 @@
-/** 
- * Primitive json values.
+/**
+ * Primitive json data types.
  */
-export type JsonPrimitive = string | number | boolean | null
+export type JsonPrimitive = (
+    | null
+    | string
+    | number
+    | boolean
+)
 
-
-/** 
- * A json object, may contain json data. 
+/**
+ * A json list.
+ * May contain json items.
  */
-export type JsonObject = {
-    [key: string]: JsonValue
-}
+export type JsonList = JsonValue[]
 
+/**
+ * A json object.
+ * Can contain json data or is empty.
+ */
+export type JsonObject = { [key: string]: JsonValue }
 
 /**
  * Everything that can be json.
  */
-export type JsonValue = JsonObject | JsonPrimitive | JsonValue[]
-
+export type JsonValue = (
+    | JsonList
+    | JsonObject
+    | JsonPrimitive
+)
 
 /**
  * Everything that can be trabnsformed into json
  * using JSON.stringify
  */
 export type JsonAble = (
-    | JsonPrimitive
     | undefined
+    | JsonPrimitive
     | JsonAble[]
     | { [key: string]: JsonAble }
     | { toJSON(): JsonAble }
