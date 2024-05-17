@@ -12,12 +12,12 @@ const plugins = (() => {
 
     switch (platform) {
         case 'win32':
-            return resolve(env.APPDATA, 'BetterDiscord', 'plugins')
+            return resolve(env.APPDATA || '/', 'BetterDiscord', 'plugins')
         case 'darwin':
-            return resolve(env.HOME, 'Library', 'Application Support', 'BetterDiscord', 'plugins')
+            return resolve(env.HOME || '/', 'Library', 'Application Support', 'BetterDiscord', 'plugins')
     }
 
-    return resolve(env.XDG_CONFIG_HOME || join(env.HOME, '.config'), 'BetterDiscord', 'plugins')
+    return resolve(env.XDG_CONFIG_HOME || join(env.HOME || '/', '.config'), 'BetterDiscord', 'plugins')
 })()
 
 

@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
-        "moduleResolution": "Bundler",
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "bundler",
 
         "noEmit": true,
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "strict": true,
+        "checkJs": true,
         "noImplicitOverride": true,
         "noFallthroughCasesInSwitch": true,
         "allowUnreachableCode": false,
